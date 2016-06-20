@@ -9,7 +9,7 @@ var trainData = new Firebase("https://trainnybx.firebaseio.com/");
         // Set form values to variables
       var trainName = $("#trainNameInput").val().trim();
       var trainDestination = $("#destinationInput").val().trim();
-      var trainStart = moment($("#trainInput").val().trim(),"HH:mm").subtract(10, "years").format("X");
+      var trainStart = $("#trainInput").val().trim();
       var frequency = $("#frequencyInput").val().trim();
       
       // set form variables to trainInfo to push to firebase
@@ -57,11 +57,7 @@ var trainData = new Firebase("https://trainnybx.firebaseio.com/");
       var trainStart = childSnapshot.val().trainStart;
       var frequency = childSnapshot.val().frequency;
 
-   // Create Firebase event for adding the  
-  
-
-    // Store everything into a variable.
-    
+   
 
       // Employee Info
       console.log(trainName);
@@ -69,11 +65,16 @@ var trainData = new Firebase("https://trainnybx.firebaseio.com/");
       console.log(arrival);
       console.log(frequency);
 
+      //
+      var time = moment(trainStart, 'h:mm a').format('H:mm');
+      console.log(time);
 
-       var differenceTimes = moment().diff(moment.unix(trainStart), "minutes");
-       var remainder = moment().diff(moment.unix(trainStart), "minutes") % frequency ;
+
+       var differenceTimes = moment().unix(time, "minutes");
+       var remainder = differenceTimes % frequency;
        var minutes = frequency - remainder;
 
+       // var for next arrival time
        var arrival = moment().add(minutes, "m").format("hh:mm A"); 
 
         console.log(minutes);
